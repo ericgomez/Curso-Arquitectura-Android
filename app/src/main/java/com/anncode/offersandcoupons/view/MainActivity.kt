@@ -18,56 +18,42 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), CouponView {
 
-    private val couponPresenter: CouponPresenter? = null
+    private var couponPresenter: CouponPresenter? = null
+    private var rvCoupons: RecyclerView? = null
 
+    //Lo primero metodo que se ejecta es el onCreate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        //couponPresenter = CouponPresenterImpl()
+        //onCreate instancia a al presentador(CouponPresenterImpl) aquiere una referencia de coupoView(this)
+        couponPresenter = CouponPresenterImpl(this)//Instaciamos la clase
+
         //VIEW
-        val rvCoupons: RecyclerView = findViewById(R.id.rvCoupons)
-        rvCoupons.layoutManager = LinearLayoutManager(this)
-        val coupons = ArrayList<Coupon>()
+        //Declaramos nuestra Vista
+        rvCoupons = findViewById(R.id.rvCoupons)//UI
+        rvCoupons?.layoutManager = LinearLayoutManager(this)
         //<-VIEW
 
-        //CONTROLLER
-        val apiAdapter = ApiAdapter();//Intanciamos la clase ApiAdapter()
-        val apiService = apiAdapter.getClientService()//Llamamos al metodo getClientService() desde la instancia apiAdapter
-        val call = apiService.getCoupons()
+        //Enseguida hacemos la llamada para traer los cupones
+        getCoupons()
+    }
 
-        call.enqueue(object : Callback<JsonObject> {
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Log.e("ERROR: ", t.message)
-                t.stackTrace
-            }
-
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                val offersJsonArray = response.body()?.getAsJsonArray("offers")
-                offersJsonArray?.forEach { jsonElement: JsonElement ->
-                    var jsonObject = jsonElement.asJsonObject
-                    var coupon = Coupon(jsonObject)
-                    coupons.add(coupon)
-                }
-
-                //VIEW - Acedemos a una porcion de la interfas
-                rvCoupons.adapter = RecyclerCouponsAdapter(coupons, R.layout.card_coupon)
-                //<- VIEW
-
-            }
-
-
-        })
-        //<-CONTROLLER
+    //Ejecutamos todo lo que tebga que ver con mostrar los cupones
+    override fun showCoupons(coupons: ArrayList<Coupon>?) {
+        //operador double bang (!!) en caso de que estemos obteniendo alguna exepcion podamos cachar
+        try {
+            rvCoupons!!.adapter = RecyclerCouponsAdapter(coupons, R.layout.card_coupon)
+        }catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 
-    override fun showCoupons(coupons: ArrayList<Coupon>) {
-        TODO("Not yet implemented")
-    }
-
+    //Metodo de la Vista
     override fun getCoupons() {
-        TODO("Not yet implemented")
+        //Empesamos a llamar al presentador su metodo getCoupons
+        couponPresenter?.getCoupons()
     }
 }

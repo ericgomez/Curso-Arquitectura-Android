@@ -9,8 +9,9 @@ class CouponsInteractorImpl(var couponPresenter: CouponPresenter): CouponsIntera
     private var couponRepository: CouponRepository = CouponRepositoryImpl(couponPresenter);
 
 
+    //El metodo getCouponsAPI debe ejecutar lo que tiene implementado CouponRepositoryImpl
     override fun getCouponsAPI() {
-
+        couponRepository.getCouponAPI()
     }
 
 
