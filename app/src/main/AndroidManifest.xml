@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"><!-- Habilitamos el trafico ara los android v9 usesCleartextTraffic para HTTPS-->
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <!-- Declaramos la pantalla -->
-        <activity android:name=".CouponDetailActivity"/>
+        <activity android:name=".view.CouponDetailActivity"/>
     </application>
 
 </manifest>
