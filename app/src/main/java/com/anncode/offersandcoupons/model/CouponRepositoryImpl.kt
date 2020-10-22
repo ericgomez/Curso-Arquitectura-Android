@@ -14,6 +14,10 @@ class CouponRepositoryImpl: CouponRepository {
 
     //Creamos una lista Mutable que se refresca por cada cambio
     private var coupons = MutableLiveData<List<Coupon>>()
+    //Subject -> MutableLiveData
+    //Observers -> List Coupon
+    //Change List Coupon -> MutableLiveData
+    //Observe
 
     //Colocamos toda la logica de conexion
     override fun callCouponAPI() {
@@ -44,9 +48,10 @@ class CouponRepositoryImpl: CouponRepository {
         coupons.value = couponsList
     }
 
-    //Se unicamente traer la lista de cupones
-    override fun getCouponAPI() {
-        TODO("Not yet implemented")
+    //Se unicamente traer la lista de cupones y esteremos devolviendola lista MutableLivedata
+    override fun getCoupon(): MutableLiveData<List<Coupon>> {
+        //si la lista sufre cambios el sugeto tambien sufre cambios
+        return coupons
     }
 
 }

@@ -1,6 +1,7 @@
 package com.anncode.offersandcoupons.model
 
 import androidx.databinding.BaseObservable
+import androidx.lifecycle.MutableLiveData
 
 //El flujo continua en *CouponObservable y estara llamando a : CouponRepositoryImpl
 //La clase CouponObservable estara heredando de la clase BaseObservable
@@ -13,4 +14,7 @@ class CouponObservable: BaseObservable() {
         couponRepository.callCouponAPI()
     }
     //Viewmodel
+    fun getCoupons(): MutableLiveData<List<Coupon>> {
+        return couponRepository.getCoupon()
+    }
 }
