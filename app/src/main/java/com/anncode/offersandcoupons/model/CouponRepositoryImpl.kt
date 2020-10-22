@@ -1,9 +1,6 @@
 package com.anncode.offersandcoupons.model
 
 import android.util.Log
-import com.anncode.offersandcoupons.R
-import com.anncode.offersandcoupons.presenter.CouponPresenter
-import com.anncode.offersandcoupons.view.RecyclerCouponsAdapter
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -11,7 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 //Las clases heredan de las interfaces padre
-class CouponRepositoryImpl(var couponPresenter: CouponPresenter): CouponRepository {
+class CouponRepositoryImpl: CouponRepository {
 
     //Colocamos toda la logica de conexion
     override fun getCouponAPI() {
@@ -35,14 +32,11 @@ class CouponRepositoryImpl(var couponPresenter: CouponPresenter): CouponReposito
                     var coupon = Coupon(jsonObject)
                     coupons?.add(coupon)
                 }
-                //Nos comentamos con el Presentes y le enviamos los cupones
-                couponPresenter.showCoupons(coupons)
             }
 
         })
         //<-CONTROLLER
 
-        //couponPresenter.showCoupons()
     }
 
 }
