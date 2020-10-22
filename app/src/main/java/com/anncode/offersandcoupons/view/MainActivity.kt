@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         //Hacemos percistente todo lo que tenga nuestro couponViewModel con ViewModelProviders
         couponViewModel = ViewModelProviders.of(this).get(CouponViewModel::class.java)
 
-        activityMainBinding.setModelBinding(couponViewModel)
+        activityMainBinding.setModel(couponViewModel)//setModel viene desde nuestro activity_main.xml en variable name="model"
         setupListUpdate()
     }
     //Tendra toda la logica de levantar la lista de nuetro recyclerview

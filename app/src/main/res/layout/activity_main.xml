@@ -5,7 +5,7 @@
     <data>
 
         <variable
-                name="modelBinding"
+                name="model"
                 type="com.anncode.offersandcoupons.viewmodel.CouponViewModel" />
 
     </data>
@@ -73,8 +73,8 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:setAdapter="@{modelBinding.getRecyclerCouponsAdapter}" />
-        <!-- El  getRecyclerCouponsAdapter lo obtiene de la clase CouponViewModel -->
+                app:setAdapter="@{model.getRecyclerCouponsAdapter}" />
+                 <!-- El setAdapter obtiene el metodo getRecyclerCouponsAdapter de la clase CouponViewModel -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

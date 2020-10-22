@@ -1,9 +1,11 @@
 package com.anncode.offersandcoupons.model
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiAdapter {
     //Consulta a las APIS
@@ -21,12 +23,15 @@ class ApiAdapter {
                 .newBuilder()
                 .url(url)
                 .build()
-
+            Log.d("URL_IMPRESA",url.url().toString())
             chain.proceed(newRequest)
         }
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(authInterceptor).build()
+            .addInterceptor(authInterceptor)
+            .retryOnConnectionFailure(true)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(urlApi)
@@ -36,4 +41,5 @@ class ApiAdapter {
 
         return  retrofit.create(ApiService::class.java)
     }
+
 }
