@@ -1,20 +1,24 @@
 package com.anncode.offersandcoupons.model
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+//Cuando la comunicacion se ejecute con exito va a regresar a CouponObservable
 //Las clases heredan de las interfaces padre
 class CouponRepositoryImpl: CouponRepository {
 
-    //Colocamos toda la logica de conexion
-    override fun getCouponAPI() {
+    //Creamos una lista Mutable que se refresca por cada cambio
+    private var coupons = MutableLiveData<List<Coupon>>()
 
+    //Colocamos toda la logica de conexion
+    override fun callCouponAPI() {
         //CONTROLLER
-        var coupons: ArrayList<Coupon>? = ArrayList<Coupon>()
+        var couponsList: ArrayList<Coupon>? = ArrayList<Coupon>()
         val apiAdapter = ApiAdapter();//Intanciamos la clase ApiAdapter()
         val apiService = apiAdapter.getClientService()//Llamamos al metodo getClientService() desde la instancia apiAdapter
         val call = apiService.getCoupons()
@@ -30,13 +34,19 @@ class CouponRepositoryImpl: CouponRepository {
                 offersJsonArray?.forEach { jsonElement: JsonElement ->
                     var jsonObject = jsonElement.asJsonObject
                     var coupon = Coupon(jsonObject)
-                    coupons?.add(coupon)
+                    couponsList?.add(coupon)
                 }
             }
 
         })
         //<-CONTROLLER
+        //Pamos la listanorma a la lista Mitable para que refreque los cambios en tiempo real
+        coupons.value = couponsList
+    }
 
+    //Se unicamente traer la lista de cupones
+    override fun getCouponAPI() {
+        TODO("Not yet implemented")
     }
 
 }

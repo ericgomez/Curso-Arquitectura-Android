@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anncode.offersandcoupons.R
 
-
+//El flujo comienza en *MainActivity y estara llamando a : CouponViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         rvCoupons?.layoutManager =
             LinearLayoutManager(this)
         //<-VIEW
+
+        //Estaremos ejecutando una llamada con CallCoupons
+        //Cuando la llamada se ejecuta se llena una list de cupones con getCoupons que trae la lista de Cupones
 
     }
 
